@@ -1,0 +1,61 @@
+{
+  "builder_name": "parquet",
+  "citation": "",
+  "config_name": "default",
+  "dataset_name": "rav4-exterior-images",
+  "dataset_size": 69197676,
+  "description": "",
+  "download_checksums": {
+    "hf://datasets/aegean-ai/rav4-exterior-images@e30866bb66e9722069c749d2ac48cddc4e21d180/data/train-00000-of-00001.parquet": {
+      "num_bytes": 69199977,
+      "checksum": null
+    }
+  },
+  "download_size": 69199977,
+  "features": {
+    "image": {
+      "_type": "Image"
+    },
+    "timestamp": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "timestamp_sec": {
+      "dtype": "int32",
+      "_type": "Value"
+    },
+    "exterior_score": {
+      "dtype": "float32",
+      "_type": "Value"
+    },
+    "width": {
+      "dtype": "int32",
+      "_type": "Value"
+    },
+    "height": {
+      "dtype": "int32",
+      "_type": "Value"
+    },
+    "video_title": {
+      "dtype": "string",
+      "_type": "Value"
+    }
+  },
+  "homepage": "",
+  "license": "",
+  "size_in_bytes": 138397653,
+  "splits": {
+    "train": {
+      "name": "train",
+      "num_bytes": 69197676,
+      "num_examples": 65,
+      "dataset_name": "rav4-exterior-images"
+    }
+  },
+  "version": {
+    "version_str": "0.0.0",
+    "major": 0,
+    "minor": 0,
+    "patch": 0
+  }
+}
