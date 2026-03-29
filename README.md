@@ -232,3 +232,56 @@ cbuild
 # Source the workspace
 ssetup
 ```
+
+## Assignment 3
+
+### Detector
+
+- Detector: `YOLO11n` trained with Ultralytics
+- Training data: Hugging Face dataset `pathikg/drone-detection-dataset`, exported to YOLO format as a single-class `drone` dataset
+- Training configuration: `pretrained=False`, `imgsz=640`, `epochs=50`, `batch=64`, `fraction=0.35`
+- Class used for training and inference: `drone`
+- Sampling rate at inference time: `5 fps`
+- Confidence threshold: `0.25`
+
+### Tracker Design
+
+The Kalman filter state is:
+
+```text
+[cx, cy, vx, vy]
+```
+
+where `cx` and `cy` are the box center coordinates in pixels, and `vx` and `vy` are the center velocities in pixels per frame interval.
+
+The measurement is:
+
+```text
+[cx, cy]
+```
+
+For each frame, the tracker predicts the next state with a constant-velocity model, matches the closest detection to the predicted center, updates the filter if a detection is available, and keeps predicting for short detection gaps.
+
+The Kalman filter parameters used in this submission are:
+
+- `max_missed = 8`
+- `association_distance = 150`
+- `measurement_var = 25`
+- `process_var = 5`
+
+### Failure Cases
+
+Typical failure cases for this pipeline are:
+
+- the drone is too small relative to the frame
+- motion blur makes the detector unstable
+- background clutter produces a false positive near the predicted location
+- long detection gaps eventually break the track
+
+Missed detections are handled by running prediction-only Kalman filter steps for short gaps. If the detector misses the drone for more than `8` consecutive sampled frames, the current track is terminated and a later detection starts a new track.
+
+### Deliverables
+
+- Hugging Face dataset: `https://huggingface.co/datasets/Congque/assignment_3`
+- YouTube video 1: `https://youtu.be/9rM-aV3axyU`
+- YouTube video 2: `https://youtu.be/DXqq5kZfk-o`
